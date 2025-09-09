@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
+import IssueCard from "../components/IssueCard"
 
-type Issue = {
+export type Issue = {
   id: string,
   title: string,
   description: string,
@@ -13,10 +14,11 @@ type Issue = {
 const sortedByUpdatedAt = (issues: Issue[]) =>
   issues.sort(
     (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-  );
+  )
+
   function loadIssues(): Issue[] {
-  const data = localStorage.getItem("issues");
-  return data ? JSON.parse(data) : [];
+  const data = localStorage.getItem("issues")
+  return data ? JSON.parse(data) : []
 }
 
 function saveIssues(issues: Issue[]): void {
@@ -40,7 +42,6 @@ function AllIssues() {
       updatedAt: now,
       wasEditedInOPenPage:false
     }
-    issues.push(newIssue)
     const updatedIssues = [...issues, newIssue]
     saveIssues(issues)
     setIssues(sortedByUpdatedAt(updatedIssues))
@@ -74,7 +75,7 @@ function AllIssues() {
         <div className="space-y-2">
           <label htmlFor="title" className="font-bold">Title</label>
           <input value={title} onChange={(e)=>{setTitle(e.target.value)}}
-            type="text"
+            type="text" id="title"
             className="w-full px-3 py-2 border border-slate-400 dark:border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-800"
             required
           />
@@ -82,7 +83,7 @@ function AllIssues() {
 
         <div className="space-y-2">
           <label htmlFor="description" className="font-bold">Description</label>
-          <textarea value={description} onChange={(e)=>{setDescription(e.target.value)}}
+          <textarea id="description" value={description} onChange={(e)=>{setDescription(e.target.value)}}
             className="w-full px-3 py-2 border border-slate-400 dark:border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white dark:bg-gray-800"
             rows={3}
             required
